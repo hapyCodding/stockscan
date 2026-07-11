@@ -46,6 +46,7 @@ cd stockscan-api
 - Swagger UI: `http://localhost:8080/swagger-ui.html`
 - H2 콘솔: `http://localhost:8080/h2-console`
 - 첫 실행 시 샘플 품목 4개가 자동으로 들어간다. 데이터는 `stockscan-api/data`에 파일로 남는다.
+- 기본은 H2(파일 DB)다. 로컬 NAS의 MariaDB로 붙이려면 [docs/nas-mariadb.md](docs/nas-mariadb.md) 참고.
 
 ### 웹 대시보드
 

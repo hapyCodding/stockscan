@@ -14,6 +14,10 @@ stockscan-app/build/
 stockscan-app/app/build/
 stockscan-app/.cxx/
 
+# 로컬 비밀 (DB 비밀번호 등)
+.env
+*.db-pass
+
 # OS
 .DS_Store
 Thumbs.db
