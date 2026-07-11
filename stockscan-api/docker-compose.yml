@@ -5,7 +5,7 @@ services:
     container_name: stockscan-api
     restart: unless-stopped
     ports:
-      - "8080:8080"
+      - "18080:8080"
     environment:
       SPRING_PROFILES_ACTIVE: mariadb
       SPRING_DATASOURCE_URL: jdbc:mariadb://192.168.35.2:3307/stockscan
