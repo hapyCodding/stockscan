@@ -1,0 +1,19 @@
+# Gradle / build
+.gradle/
+build/
+stockscan-api/data/
+
+# IntelliJ / Android Studio
+.idea/
+*.iml
+local.properties
+
+# Android
+stockscan-app/.gradle/
+stockscan-app/build/
+stockscan-app/app/build/
+stockscan-app/.cxx/
+
+# OS
+.DS_Store
+Thumbs.db

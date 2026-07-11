@@ -1,0 +1,14 @@
+# MySQL 전환용 프로파일. 실행: --spring.profiles.active=mysql
+# build.gradle.kts 에 runtimeOnly("com.mysql:mysql-connector-j") 추가 후 사용한다.
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/stockscan?serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: stockscan
+    password: stockscan
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
