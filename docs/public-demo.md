@@ -12,30 +12,25 @@
 Synology가 포트포워딩을 관리하면 **제어판 > 외부 액세스 > 라우터 구성**에서 3307 규칙을 삭제.
 백엔드는 내부에서 `192.168.35.2:3307`로만 붙으므로 외부 노출이 필요 없다.
 
-## 1. 백엔드 이미지 빌드 (PC)
+## 1. 프로젝트 배포 (Container Manager)
 
-DS220+(2GB)에서 직접 빌드하면 무거우니 PC에서 이미지를 만들어 NAS로 옮긴다.
+이 NAS는 Container Manager의 **프로젝트(docker-compose)** 로 컨테이너를 운영한다
+(`/volume1/docker/<이름>`). 같은 방식으로 올린다.
 
-```
-cd stockscan-api
-docker build -t stockscan-api:0.1.0 .
-docker save stockscan-api:0.1.0 | gzip > stockscan-api.tar.gz
-```
+1. `stockscan-api/` 폴더를 NAS `/volume1/docker/stockscan/`에 복사한다(File Station 또는
+   git clone). `Dockerfile`, `docker-compose.yml`, 소스가 함께 있어야 빌드된다.
+2. 그 폴더에 `.env`를 만든다(`.env.example` 참고):
+   ```
+   DB_PASSWORD=설정한_비밀번호
+   ```
+3. **Container Manager > 프로젝트 > 생성** → 경로 `/volume1/docker/stockscan` →
+   기존 `docker-compose.yml` 사용 → 빌드 후 실행.
 
-`stockscan-api.tar.gz`를 NAS에 올리고 **Container Manager > 이미지 > 가져오기**로 등록.
+컨테이너는 호스트 LAN IP(`192.168.35.2:3307`)로 MariaDB에 접속한다(compose에 지정됨).
+빌드는 NAS에서 진행되어 2GB 환경에선 다소 느릴 수 있다. 더 가볍게 하려면 PC에서
+`docker build`로 이미지를 만들어 Container Manager로 가져오고 compose의 `build: .`를 지운다.
 
-## 2. 컨테이너 실행 (NAS)
-
-Container Manager에서 컨테이너 생성. 설정:
-
-- 포트: 컨테이너 `8080` → 로컬 `8080`
-- 환경변수:
-  - `SPRING_PROFILES_ACTIVE=mariadb`
-  - `DB_PASSWORD=(설정한 비밀번호)`
-  - (NAS IP가 다르면) `SPRING_DATASOURCE_URL=jdbc:mariadb://192.168.35.2:3307/stockscan`
-
-컨테이너 안에서 호스트 LAN IP(`192.168.35.2:3307`)로 MariaDB에 접속한다. 기동 후
-`http://192.168.35.2:8080/api/items`로 LAN에서 먼저 확인.
+기동 후 LAN에서 먼저 확인: `http://192.168.35.2:8080/api/items`
 
 ## 3. 인증서 + 리버스 프록시 (DSM)
 

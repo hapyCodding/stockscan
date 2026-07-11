@@ -2,5 +2,6 @@ build/
 .gradle/
 data/
 .db-pass
+.env
 .idea/
 *.iml
