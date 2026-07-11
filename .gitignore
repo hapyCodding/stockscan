@@ -8,6 +8,11 @@ stockscan-api/data/
 *.iml
 local.properties
 
+# Eclipse / Buildship
+.project
+.classpath
+.settings/
+
 # Android
 stockscan-app/.gradle/
 stockscan-app/build/
