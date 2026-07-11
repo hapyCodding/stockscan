@@ -14,7 +14,8 @@ android {
         versionCode = 1
         versionName = "0.1.0"
 
-        // 에뮬레이터에서 호스트 PC의 백엔드(localhost:8080)에 접속. 실기기라면 PC의 LAN IP로 교체.
+        // debug 기본값. 에뮬레이터에서 호스트 PC의 로컬 백엔드(localhost:8080)로 접속.
+        // 실기기로 로컬 백엔드에 붙일 땐 PC의 LAN IP로 교체.
         buildConfigField("String", "API_BASE_URL", "\"http://10.0.2.2:8080/\"")
     }
 
@@ -25,6 +26,8 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
+            // NAS에 배포된 공개 백엔드(HTTPS). 실기기에서 그대로 동작.
+            buildConfigField("String", "API_BASE_URL", "\"https://psh55401.synology.me:8443/\"")
         }
     }
 

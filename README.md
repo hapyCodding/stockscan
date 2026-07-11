@@ -64,9 +64,12 @@ python -m http.server 5500
 ### 안드로이드 앱
 
 `stockscan-app`을 Android Studio로 열고 에뮬레이터 또는 실기기에서 실행한다.
-에뮬레이터는 호스트 PC를 `10.0.2.2`로 보므로 API 주소가 `http://10.0.2.2:8080/`으로
-맞춰져 있다(`app/build.gradle.kts`의 `API_BASE_URL`). 실기기로 붙일 때는 같은 값을 PC의
-LAN IP로 바꾸면 된다.
+API 주소(`app/build.gradle.kts`의 `API_BASE_URL`)는 빌드 타입별로 나눠 뒀다.
+
+- **debug**: `http://10.0.2.2:8080/` — 에뮬레이터에서 호스트 PC의 로컬 백엔드로 접속.
+  실기기로 로컬에 붙일 땐 PC의 LAN IP로 바꾼다.
+- **release**: `https://psh55401.synology.me:8443/` — NAS에 배포된 공개 백엔드. 실기기에서
+  네트워크 상관없이 그대로 동작한다.
 
 ## 데모 흐름
 
