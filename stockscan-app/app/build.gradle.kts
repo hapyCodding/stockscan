@@ -26,8 +26,8 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
-            // NAS에 배포된 공개 백엔드(HTTPS). 실기기에서 그대로 동작.
-            buildConfigField("String", "API_BASE_URL", "\"https://psh55401.synology.me:8443/\"")
+            // 배포된 공개 백엔드(HTTPS) 주소. 본인 서버 주소로 교체해서 쓴다.
+            buildConfigField("String", "API_BASE_URL", "\"https://your-nas.synology.me:8443/\"")
             // 데모 배포용. 릴리스 스토어에 올리는 게 아니라 설치용 APK만 뽑으므로 디버그 키로 서명.
             signingConfig = signingConfigs.getByName("debug")
         }

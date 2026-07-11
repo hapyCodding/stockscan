@@ -8,7 +8,7 @@
 
 ## 0. DB 외부 포워딩 닫기 (먼저)
 
-`psh55401.synology.me:3307`이 인터넷에 열려 있으면 닫는다. 공유기 관리 페이지 또는
+`your-nas.synology.me:3307`이 인터넷에 열려 있으면 닫는다. 공유기 관리 페이지 또는
 Synology가 포트포워딩을 관리하면 **제어판 > 외부 액세스 > 라우터 구성**에서 3307 규칙을 삭제.
 백엔드는 내부에서 `192.168.35.2:3307`로만 붙으므로 외부 노출이 필요 없다.
 
@@ -35,18 +35,18 @@ Synology가 포트포워딩을 관리하면 **제어판 > 외부 액세스 > 라
 
 ## 3. 인증서 + 리버스 프록시 (DSM)
 
-DDNS `psh55401.synology.me`는 이미 있다.
+DDNS `your-nas.synology.me`는 이미 있다.
 
-1. **제어판 > 보안 > 인증서**: Let's Encrypt 인증서 발급(도메인 `psh55401.synology.me`).
+1. **제어판 > 보안 > 인증서**: Let's Encrypt 인증서 발급(도메인 `your-nas.synology.me`).
 2. **제어판 > 로그인 포털 > 고급 > 리버스 프록시 > 생성**:
-   - 소스: HTTPS / `psh55401.synology.me` / `8443`
+   - 소스: HTTPS / `your-nas.synology.me` / `8443`
    - 대상: HTTP / `localhost` / `18080`
 3. 공유기에서 `8443` 포워딩. 리버스 프록시 서비스에 위 인증서를 지정.
 
 확인:
 
 ```
-curl https://psh55401.synology.me:8443/api/items
+curl https://your-nas.synology.me:8443/api/items
 ```
 
 ## 4. 인증 주의 (쓰기 API)
@@ -62,7 +62,7 @@ curl https://psh55401.synology.me:8443/api/items
 `stockscan-web`을 **Web Station**으로 정적 호스팅하고, API 주소를 공개 백엔드로 넘긴다.
 
 ```
-https://<웹호스팅주소>/index.html?api=https://psh55401.synology.me:8443
+https://<웹호스팅주소>/index.html?api=https://your-nas.synology.me:8443
 ```
 
 백엔드 CORS가 모든 오리진을 허용(GET/POST)하도록 돼 있어 다른 호스트에서 열어도 동작한다.
